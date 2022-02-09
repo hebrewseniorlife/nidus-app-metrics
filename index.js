@@ -6,7 +6,7 @@ const path = require('path');
     let browserPath = edgePaths.getEdgePath();
     console.log(`Browser Path: ${browserPath}`);
 
-    let webPath = path.resolve('./public/metric.htm');
+    let webPath = path.resolve('./docs/metric.htm');
     console.log(`Web Page: ${webPath}`);
 
     let screenshotPath = path.resolve('./output/screenshot.png');
