@@ -22,6 +22,42 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
-  <script src="render.js"></script>
+  <script type="text/javascript">
+$(document).ready(function() {  
+    var data = $.ajax(
+        {
+            url: "https://ifar-connect.hsl.harvard.edu/public/nidus/pdf/card_nums.json",
+            type: 'GET', 
+            dataType: "json",
+            success: function(data) {
+                    renderMetrics(data);
+                    $("#metric-container").append('<div id="metric-loaded"></div>');
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log({ status: textStatus, error: errorThrown });
+                    $("#metric-error").css("visibility","visible");
+                    $("#metric-container").append('<div id="metric-loaded"></div>');
+            }
+        });
+});
+
+function renderMetrics(data){
+    var labels = $("#metric-labels");
+    if (labels) {
+        data.forEach(function(item) {
+        labels.append('<div class="col text-center"><span style="font-size:large">' + item.label + '</span></div>');
+        });
+    }
+    var values = $("#metric-values");
+    if (values) {
+        data.forEach(function(item) {
+        values.append('<div class="col text-center"><span class="badge badge-pill badge-dark" style="font-size:medium">' + item.value + '</span></div>');
+        });
+    }
+}
+
+  </script>
 </body>
 </html>
